@@ -1,0 +1,7 @@
+debug: False
+debug_crop_size: 128
+batch_size: 256
+threshold: 0.95
+# путь к корневому каталогу ПРОГРАММЫ
+path_to_root: ../../
+

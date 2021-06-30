@@ -1,0 +1,15 @@
+defaults:
+  - map: kazan_cfg.yaml
+# путь к корневому каталогу ПРОГРАММЫ
+path_to_root: ../../
+debug_crop_size: 128
+debug_image_dir: c:/temp/
+save_miclassified_images: 10
+save_classified_images: 10
+threshold: 0.95
+
+
+walks_file: data\interim\walks4.txt
+walk_step: 1
+class_cnt: 18
+deviation: 3

@@ -1,0 +1,13 @@
+defaults:
+  - map: kazan_cfg.yaml
+
+input: data/queries/test_zapros.csv
+output: reports/output.csv
+debug: False
+debug_crop_size: 128
+debug_image_dir: c:/temp/
+batch_size: 256
+threshold: 0.95
+# путь к корневому каталогу ПРОГРАММЫ
+path_to_root: ../../
+

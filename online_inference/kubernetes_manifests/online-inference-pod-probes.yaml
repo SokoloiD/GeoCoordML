@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: geo-map-service
+  labels:
+    app: geo-map-service
+
+spec:
+  containers:
+  - name: geo-coord
+    resources:
+      requests:
+        memory: "2Gi"
+      limits:
+        memory: "4Gi"
+    image: sokoloid/geo_map:v1
+    ports:
+      - containerPort: 8000
+    readinessProbe:
+      httpGet:
+        path: /status
+        port: 8000
+      initialDelaySeconds: 25
+      periodSeconds: 3
+    livenessProbe:
+      httpGet:
+        path: /
+        port: 8000
+      initialDelaySeconds: 35
+      periodSeconds: 5
+
+    command: [ "/bin/sh","-c" ]
+    args: [ 'sleep 30s ; python /src/model/app_fast_api.py & sleep 60; exit -1']
+
+  restartPolicy: Never
+
