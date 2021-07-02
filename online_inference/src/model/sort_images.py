@@ -45,7 +45,7 @@ def save_images(results,
     for res in results:
         if (res.target != res.predict) == save_wrong_classified:
             image_count += 1
-            image_file_name = f"img_true_{res.target}-pred_{res.predict}_{round(100 * np.exp(-res.score))}" \
+            image_file_name = f"img_groundtrue_{res.target}-pred_{res.predict}_{round(100 * np.exp(-res.score))}" \
                               f"_pecent_x{res.coord[0]}_y{res.coord[1]}.jpg"
             walk_lines.map_image.save_debug_image(os.path.join(save_dir, image_file_name),
                                                   res.coord,

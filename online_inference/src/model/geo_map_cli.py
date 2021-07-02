@@ -13,6 +13,9 @@
 [55.79883508185922, 49.105875912272566];14404;12460;Специализированная зона размещения объектов торговли...
 [55.80330934948255, 49.33272207144011];25250;12114;Зона мест погребения
 
+пример запуска в режиме отладки. на вход подается файл запросов error_test.csv  . изображения районов координат
+ сохраняются в каталог /home/sokolov/debug
+/src/model/geo_map_cli.py input=data/queries/error_test.csv debug=True debug_image_dir=/home/sokolov/debug
 
 """
 
@@ -31,6 +34,7 @@ from utils.data_structures import Config, GeoImage
 from utils.common_utils import batch_predict_area_class, description_iterator
 
 log = logging.getLogger(__name__)
+MAX_FILE_NAME_LEN = 150
 
 
 def write_predict_w_description(output_file_name: str,
@@ -55,16 +59,21 @@ def write_predict_w_description(output_file_name: str,
                        f"{point_w_description.description}\n")
             cnt += 1
             if cfg.debug:
-                file_name = f"img_{point_w_description.gps.replace('.', '_')}" \
+                file_name = f"img_" \
+                            f"{point_w_description.gps.replace('.', '_')}" \
                             f"_x{point_w_description.coord[0]}-y{point_w_description.coord[1]}" \
                             f"_{round(100 * point_w_description.probability)}_" \
                             f"_{point_w_description.description}" \
-                            f"_.jpg"
+
+                #  обрезаем имя файла
+                if len(file_name) > MAX_FILE_NAME_LEN:
+                    file_name = file_name[:MAX_FILE_NAME_LEN]
+
+                file_name += "_.jpg"
                 file_name = os.path.join(cfg.debug_image_dir, file_name)
                 geo_map.save_debug_image(file_name,
                                          point_w_description.coord,
-                                         crop_size=cfg.debug_crop_size,
-                                         analyzed_area=cfg.map.crop_size)
+                                         crop_size=cfg.debug_crop_size)
         log.info(f" saved {cnt} records")
 
 
@@ -77,6 +86,7 @@ def main(cfg: Config) -> None:
     output_file = norm_file_path(cfg.output, root_path)
 
     Image.MAX_IMAGE_PIXELS = max(Image.MAX_IMAGE_PIXELS, cfg.map.max_image_pixels)
+
     geo_map = GeoImage(os.path.join(root_path, cfg.map.map_image), cfg.map.crop_size)
 
     gps_to_pixel = GpsToPixelTransformer(np.array(cfg.map.gps_coord),

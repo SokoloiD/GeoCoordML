@@ -1,7 +1,4 @@
-/online_inference/data/raw/gp_kazan.jpg
 /online_inference/src/model/outputs/
 /online_inference/model/best_model_crop32.pkl
 /online_inference/model/
 /online_inference/data/raw/
-/online_inference/model/
-/online_inference/reports/

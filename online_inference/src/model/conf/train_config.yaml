@@ -5,13 +5,12 @@ defaults:
 path_to_root: ../../
   # путь от корневого каталога до изображения карты
 
-walks_file: data\interim\walks4.txt
-model_save: model\best_model_crop32.pkl
+walks_file: data/interim/walks4.txt
+model_save: model/best_model_crop32.pkl
 train_val_ratio: 0.8
 batch_size: 512
 crop_size: 32
 walk_step: 1
-class_cnt: 18
 deviation: 3
 epoch: 20
 lr: 0.001

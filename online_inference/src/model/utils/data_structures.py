@@ -144,6 +144,7 @@ class PredictResult:
     target: int = 0
     predict: int = 0
     score: float = 0
+    class_num: int = 0
 
 
 @dataclass
